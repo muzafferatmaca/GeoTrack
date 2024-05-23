@@ -1,2 +1,206 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <!-- *** Base Color Palettes *** !-->
+
+    <!-- Cool Grey !-->
+    <color name="coolGrey1">#FCFCFD</color>
+    <color name="coolGrey2">#F5F7F9</color>
+    <color name="coolGrey3">#F0F3F5</color>
+    <color name="coolGrey4">#EAEDF0</color>
+    <color name="coolGrey5">#DEE3E7</color>
+    <color name="coolGrey6">#CFD6DD</color>
+    <color name="coolGrey7">#9EA8B3</color>
+    <color name="coolGrey8">#7E8C9A</color>
+    <color name="coolGrey9">#555F6D</color>
+    <color name="coolGrey10">#4A545E</color>
+    <color name="coolGrey11">#3A424A</color>
+    <color name="coolGrey12">#272E35</color>
+    <color name="coolGrey13">#1B242C</color>
+
+    <!-- Blue !-->
+    <color name="blue1">#00114B</color>
+    <color name="blue2">#05205E</color>
+    <color name="blue3">#113997</color>
+    <color name="blue4">#1E50C0</color>
+    <color name="blue5">#2759CD</color>
+    <color name="blue6">#3062D4</color>
+    <color name="blue7">#6792F4</color>
+    <color name="blue8">#8DB0FB</color>
+    <color name="blue9">#CDDDFF</color>
+    <color name="blue10">#D7E4FF</color>
+
+    <!-- Red !-->
+    <color name="red1">#2A1215</color>
+    <color name="red2">#4A0D0D</color>
+    <color name="red3">#6F2020</color>
+    <color name="red4">#952D2D</color>
+    <color name="red5">#A13636</color>
+    <color name="red6">#C53434</color>
+    <color name="red7">#F26464</color>
+    <color name="red8">#FF7875</color>
+    <color name="red9">#F89F9A</color>
+    <color name="red10">#FAC8C3</color>
+
+    <!-- Gold !-->
+    <color name="gold1">#3C1E07</color>
+    <color name="gold2">#482909</color>
+    <color name="gold3">#7A4510</color>
+    <color name="gold4">#A05C1C</color>
+    <color name="gold5">#B4610E</color>
+    <color name="gold6">#F59638</color>
+    <color name="gold7">#F6A351</color>
+    <color name="gold8">#F7BD82</color>
+    <color name="gold9">#F8D2A9</color>
+    <color name="gold10">#F9E6CF</color>
+
+    <!-- Green !-->
+    <color name="green1">#05150F</color>
+    <color name="green2">#062D1B</color>
+    <color name="green3">#0E4E30</color>
+    <color name="green4">#196742</color>
+    <color name="green5">#1E714A</color>
+    <color name="green6">#1D7C4D</color>
+    <color name="green7">#4AA578</color>
+    <color name="green8">#71AC8F</color>
+    <color name="green9">#9EC7B2</color>
+    <color name="green10">#C9E0D4</color>
+
+    <!-- Brand !-->
+    <color name="brand1">#072008</color>
+    <color name="brand2">#0A2E0B</color>
+    <color name="brand3">#135315</color>
+    <color name="brand4">#246626</color>
+    <color name="brand5">#2F6F2F</color>
+    <color name="brand6">#347434</color>
+    <color name="brand7">#55A555</color>
+    <color name="brand8">#79B979</color>
+    <color name="brand9">#AFD5AF</color>
+    <color name="brand10">#BCDCBC</color>
+
+    <!-- *** Neutral Colors Pallets *** !-->
+
+    <!-- Default !-->
+    <color name="colorBgBase">@color/coolGrey12</color>
+    <color name="colorWhite">#FFFFFF</color>
+    <color name="colorDark">@color/coolGrey13</color>
+
+    <!-- Text !-->
+    <color name="colorText">@color/coolGrey2</color>
+    <color name="colorTextSecondary">@color/coolGrey5</color>
+    <color name="colorTextTertiary">@color/coolGrey6</color>
+    <color name="colorTextQuaternary">@color/coolGrey7</color>
+    <color name="colorTextLightSolid">#FFFFFF</color>
+    <color name="colorTextHeading">@color/colorText</color>
+    <color name="colorTextLabel">@color/colorTextSecondary</color>
+    <color name="colorTextDescription">@color/colorTextTertiary</color>
+    <color name="colorTextDisabled">@color/colorTextQuaternary</color>
+    <color name="colorTextPlaceholder">@color/colorTextQuaternary</color>
+
+    <!-- Icon !-->
+    <color name="colorIcon">@color/colorTextTertiary</color>
+    <color name="colorIconHover">@color/colorText</color>
+
+    <!-- Fill !-->
+    <color name="colorFill">@color/coolGrey7</color>
+    <color name="colorFillSecondary">@color/coolGrey8</color>
+    <color name="colorFillTertiary">@color/coolGrey11</color>
+    <color name="colorFillQuaternary">@color/coolGrey12</color>
+    <color name="colorFillContent">#0FFFFFFF</color>
+    <color name="colorFillContentHover">#42FFFFFF</color>
+    <color name="colorFillAlter">@color/colorFillQuaternary</color>
+
+    <!-- Background !-->
+    <color name="colorBgContainer">@color/colorBgBase</color>
+    <color name="colorBgElevated">@color/colorBgBase</color>
+    <color name="colorBgLayout">@color/coolGrey13</color>
+    <color name="colorBgMask">@color/white</color>
+    <color name="colorBgSpotlight">@color/white</color>
+    <color name="colorBgContainerDisabled">@color/colorFillTertiary</color>
+    <color name="colorBgTextActive">@color/colorFill</color>
+    <color name="colorBgTextHover">@color/colorFillSecondary</color>
+    <color name="colorBorderBg">@color/colorBgContainer</color>
+
+    <!-- Border !-->
+    <color name="colorBorder">@color/coolGrey7</color>
+    <color name="colorBorderSecondary">@color/coolGrey8</color>
+    <color name="colorSplit">@color/coolGrey8</color>
+
+
+    <!-- *** Theme Colors *** !-->
+
+    <!-- Primary !-->
+    <color name="colorPrimaryBg">@color/brand1</color>
+    <color name="colorPrimaryBgHover">@color/brand2</color>
+    <color name="colorPrimaryBorder">@color/brand3</color>
+    <color name="colorPrimaryBorderHover">@color/brand4</color>
+    <color name="colorPrimaryHover">@color/brand7</color>
+    <color name="colorPrimary">@color/brand6</color>
+    <color name="colorPrimaryActive">@color/brand5</color>
+    <color name="colorPrimaryTextHover">@color/brand7</color>
+    <color name="colorPrimaryText">@color/brand6</color>
+    <color name="colorPrimaryTextActive">@color/brand5</color>
+
+    <!-- Success !-->
+    <color name="colorSuccessBg">@color/green1</color>
+    <color name="colorSuccessBgHover">@color/green2</color>
+    <color name="colorSuccessBorder">@color/green3</color>
+    <color name="colorSuccessBorderHover">@color/green4</color>
+    <color name="colorSuccessHover">@color/green4</color>
+    <color name="colorSuccess">@color/green6</color>
+    <color name="colorSuccessActive">@color/green5</color>
+    <color name="colorSuccessTextHover">@color/green7</color>
+    <color name="colorSuccessText">@color/green6</color>
+    <color name="colorSuccessTextActive">@color/green5</color>
+
+    <!-- Warning !-->
+    <color name="colorWarningBg">@color/gold1</color>
+    <color name="colorWarningBgHover">@color/gold2</color>
+    <color name="colorWarningBorder">@color/gold3</color>
+    <color name="colorWarningBorderHover">@color/gold4</color>
+    <color name="colorWarningHover">@color/gold7</color>
+    <color name="colorWarning">@color/gold6</color>
+    <color name="colorWarningActive">@color/gold5</color>
+    <color name="colorWarningTextHover">@color/gold7</color>
+    <color name="colorWarningText">@color/gold6</color>
+    <color name="colorWarningTextActive">@color/gold5</color>
+
+    <!-- Info !-->
+    <color name="colorInfoBg">@color/blue1</color>
+    <color name="colorInfoBgHover">@color/blue2</color>
+    <color name="colorInfoBorder">@color/blue3</color>
+    <color name="colorInfoBorderHover">@color/blue4</color>
+    <color name="colorInfoHover">@color/blue7</color>
+    <color name="colorInfo">@color/blue6</color>
+    <color name="colorInfoActive">@color/blue5</color>
+    <color name="colorInfoTextHover">@color/blue7</color>
+    <color name="colorInfoText">@color/blue6</color>
+    <color name="colorInfoTextActive">@color/blue5</color>
+
+    <!-- Error !-->
+    <color name="colorErrorBg">@color/red1</color>
+    <color name="colorErrorBgHover">@color/red2</color>
+    <color name="colorErrorBorder">@color/red3</color>
+    <color name="colorErrorBorderHover">@color/red4</color>
+    <color name="colorErrorHover">@color/red7</color>
+    <color name="colorError">@color/red6</color>
+    <color name="colorErrorActive">@color/red5</color>
+    <color name="colorErrorTextHover">@color/red7</color>
+    <color name="colorErrorText">@color/red6</color>
+    <color name="colorErrorTextActive">@color/red5</color>
+
+    <!-- Link !-->
+    <color name="colorLink">@color/colorPrimary</color>
+    <color name="colorLinkHover">@color/colorPrimaryHover</color>
+    <color name="colorLinkActive">@color/colorPrimaryActive</color>
+
+    <!-- Control !-->
+    <color name="controlItemBgActive">@color/colorPrimaryBg</color>
+    <color name="controlItemBgActiveDisabled">@color/colorFill</color>
+    <color name="controlItemBgActiveHover">@color/colorPrimaryBgHover</color>
+    <color name="controlItemBgHover">@color/colorFillTertiary</color>
+    <color name="controlOutline">#26246626</color>
+    <color name="controlTmpOutline">@color/colorFillQuaternary</color>
+
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+</resources>

@@ -81,6 +81,7 @@ android {
 dependencies {
 
     implementation(projects.core)
+    implementation(projects.feature.locationtracking)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

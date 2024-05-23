@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- *** Base *** !-->
+    <style name="Base_Normal">
+        <item name="fontFamily">@font/font_normal</item>
+        <item name="android:textSize">@dimen/text_size_14</item>
+        <item name="android:lineSpacingMultiplier">@dimen/lineHeight_157</item>
+    </style>
+    <style name="Base_Strong">
+        <item name="fontFamily">@font/font_strong</item>
+        <item name="android:textSize">@dimen/text_size_14</item>
+        <item name="android:lineSpacingMultiplier">@dimen/lineHeight_157</item>
+    </style>
+    <style name="Base_Underline">
+        <item name="fontFamily">@font/font_normal</item>
+        <item name="android:textSize">@dimen/text_size_14</item>
+        <item name="android:lineSpacingMultiplier">@dimen/lineHeight_157</item>
+    </style>
+
+    <!-- *** XS *** !-->
+    <style name="XS_Normal">
+        <item name="fontFamily">@font/font_normal</item>
+        <item name="android:textSize">@dimen/text_size_10</item>
+        <item name="android:lineSpacingMultiplier">@dimen/lineHeight_160</item>
+        <item name="android:textAllCaps">@bool/textCaseUppercase</item>
+    </style>
+    <style name="XS_Strong">
+        <item name="fontFamily">@font/font_strong</item>
+        <item name="android:textSize">@dimen/text_size_10</item>
+        <item name="android:lineSpacingMultiplier">@dimen/lineHeight_160</item>
+        <item name="android:textAllCaps">@bool/textCaseUppercase</item>
+    </style>
+    <style name="XS_Underline">
+        <item name="fontFamily">@font/font_normal</item>
+        <item name="android:textSize">@dimen/text_size_10</item>
+        <item name="android:lineSpacingMultiplier">@dimen/lineHeight_160</item>
+        <item name="android:textAllCaps">@bool/textCaseUppercase</item>
+    </style>
+
+    <!-- *** SM *** !-->
+    <style name="SM_Normal">
+        <item name="fontFamily">@font/font_normal</item>
+        <item name="android:textSize">@dimen/text_size_12</item>
+        <item name="android:lineSpacingMultiplier">@dimen/lineHeight_166</item>
+    </style>
+    <style name="SM_Strong">
+        <item name="fontFamily">@font/font_strong</item>
+        <item name="android:textSize">@dimen/text_size_12</item>
+        <item name="android:lineSpacingMultiplier">@dimen/lineHeight_166</item>
+    </style>
+    <style name="SM_Underline">
+        <item name="fontFamily">@font/font_normal</item>
+        <item name="android:textSize">@dimen/text_size_12</item>
+        <item name="android:lineSpacingMultiplier">@dimen/lineHeight_166</item>
+    </style>
+
+    <!-- *** LG *** !-->
+    <style name="LG_Normal">
+        <item name="fontFamily">@font/font_normal</item>
+        <item name="android:textSize">@dimen/text_size_16</item>
+        <item name="android:lineSpacingMultiplier">@dimen/lineHeight_150</item>
+    </style>
+    <style name="LG_Strong">
+        <item name="fontFamily">@font/font_strong</item>
+        <item name="android:textSize">@dimen/text_size_16</item>
+        <item name="android:lineSpacingMultiplier">@dimen/lineHeight_150</item>
+    </style>
+    <style name="LG_Underline">
+        <item name="fontFamily">@font/font_normal</item>
+        <item name="android:textSize">@dimen/text_size_16</item>
+        <item name="android:lineSpacingMultiplier">@dimen/lineHeight_150</item>
+    </style>
+
+    <!-- *** H5 *** !-->
+    <style name="H5_Normal">
+        <item name="fontFamily">@font/font_normal</item>
+        <item name="android:textSize">@dimen/text_size_20</item>
+        <item name="android:lineSpacingMultiplier">@dimen/lineHeight_140</item>
+    </style>
+    <style name="H5_Strong">
+        <item name="fontFamily">@font/font_strong</item>
+        <item name="android:textSize">@dimen/text_size_20</item>
+        <item name="android:lineSpacingMultiplier">@dimen/lineHeight_140</item>
+    </style>
+    <style name="H5_Underline">
+        <item name="fontFamily">@font/font_normal</item>
+        <item name="android:textSize">@dimen/text_size_20</item>
+        <item name="android:lineSpacingMultiplier">@dimen/lineHeight_140</item>
+    </style>
+
+    <!-- *** H4 *** !-->
+    <style name="H4_Normal">
+        <item name="fontFamily">@font/font_normal</item>
+        <item name="android:textSize">@dimen/text_size_24</item>
+        <item name="android:lineSpacingMultiplier">@dimen/lineHeight_133</item>
+    </style>
+    <style name="H4_Strong">
+        <item name="fontFamily">@font/font_strong</item>
+        <item name="android:textSize">@dimen/text_size_24</item>
+        <item name="android:lineSpacingMultiplier">@dimen/lineHeight_133</item>
+    </style>
+    <style name="H4_Underline">
+        <item name="fontFamily">@font/font_normal</item>
+        <item name="android:textSize">@dimen/text_size_24</item>
+        <item name="android:lineSpacingMultiplier">@dimen/lineHeight_133</item>
+    </style>
+
+    <!-- *** H3 *** !-->
+    <style name="H3_Normal">
+        <item name="fontFamily">@font/font_normal</item>
+        <item name="android:textSize">@dimen/text_size_28</item>
+        <item name="android:lineSpacingMultiplier">@dimen/lineHeight_128</item>
+    </style>
+    <style name="H3_Strong">
+        <item name="fontFamily">@font/font_strong</item>
+        <item name="android:textSize">@dimen/text_size_28</item>
+        <item name="android:lineSpacingMultiplier">@dimen/lineHeight_128</item>
+    </style>
+    <style name="H3_Underline">
+        <item name="fontFamily">@font/font_normal</item>
+        <item name="android:textSize">@dimen/text_size_28</item>
+        <item name="android:lineSpacingMultiplier">@dimen/lineHeight_128</item>
+    </style>
+
+    <!-- *** H2 *** !-->
+    <style name="H2_Normal">
+        <item name="fontFamily">@font/font_normal</item>
+        <item name="android:textSize">@dimen/text_size_32</item>
+        <item name="android:lineSpacingMultiplier">@dimen/lineHeight_125</item>
+    </style>
+    <style name="H2_Strong">
+        <item name="fontFamily">@font/font_strong</item>
+        <item name="android:textSize">@dimen/text_size_32</item>
+        <item name="android:lineSpacingMultiplier">@dimen/lineHeight_125</item>
+    </style>
+    <style name="H2_Underline">
+        <item name="fontFamily">@font/font_normal</item>
+        <item name="android:textSize">@dimen/text_size_32</item>
+        <item name="android:lineSpacingMultiplier">@dimen/lineHeight_125</item>
+    </style>
+
+    <!-- *** H1 *** !-->
+    <style name="H1_Normal">
+        <item name="fontFamily">@font/font_normal</item>
+        <item name="android:textSize">@dimen/text_size_40</item>
+        <item name="android:lineSpacingMultiplier">@dimen/lineHeight_120</item>
+    </style>
+    <style name="H1_Strong">
+        <item name="fontFamily">@font/font_strong</item>
+        <item name="android:textSize">@dimen/text_size_40</item>
+        <item name="android:lineSpacingMultiplier">@dimen/lineHeight_120</item>
+    </style>
+    <style name="H1_Underline">
+        <item name="fontFamily">@font/font_normal</item>
+        <item name="android:textSize">@dimen/text_size_40</item>
+        <item name="android:lineSpacingMultiplier">@dimen/lineHeight_120</item>
+    </style>
+    ,
+
+    <!-- Text Case -->
+    <bool name="textCaseNone">false</bool>
+    <bool name="textCaseUppercase">true</bool>
+
+    <!-- Text Decoration -->
+    <string name="textDecoration_none" translatable="false">none</string>
+    <string name="textDecoration_underline" translatable="false">underline</string>
+
+    <!-- Line Height -->
+    <dimen name="lineHeight_120">1.20</dimen>
+    <dimen name="lineHeight_125">1.25</dimen>
+    <dimen name="lineHeight_128">1.28</dimen>
+    <dimen name="lineHeight_133">1.33</dimen>
+    <dimen name="lineHeight_140">1.40</dimen>
+    <dimen name="lineHeight_150">1.50</dimen>
+    <dimen name="lineHeight_157">1.57</dimen>
+    <dimen name="lineHeight_160">1.60</dimen>
+    <dimen name="lineHeight_166">1.66</dimen>
+
+</resources>

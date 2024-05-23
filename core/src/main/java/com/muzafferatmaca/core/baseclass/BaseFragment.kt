@@ -15,7 +15,7 @@ abstract class BaseFragment<VB : ViewBinding>(private val inflate: Inflate<VB>) 
 
     private var _binding: VB? = null
 
-    val binding get() = _binding!!
+    protected val binding get() = _binding!!
 
     abstract fun initUi()
 

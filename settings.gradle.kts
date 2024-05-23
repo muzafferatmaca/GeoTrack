@@ -23,3 +23,4 @@ rootProject.name = "GeoTrack"
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 include(":app")
 include(":core")
+include(":feature:locationtracking")

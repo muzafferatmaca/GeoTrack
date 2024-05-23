@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">GeoTrack</string>
+    <string name="icon" translatable="false">Icon</string>
+    <string name="emptyText" translatable="false">-----</string>
+</resources>
