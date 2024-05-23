@@ -1,3 +1,7 @@
+import com.android.build.gradle.internal.tasks.databinding.DataBindingGenBaseClassesTask
+import org.gradle.configurationcache.extensions.capitalized
+import org.jetbrains.kotlin.gradle.tasks.AbstractKotlinCompileTool
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
@@ -75,6 +79,20 @@ android {
     buildFeatures {
         viewBinding = true
         buildConfig = true
+    }
+    // Fix: [Ksp] InjectProcessingStep was unable to process 'test' because 'error.NonExistentClass' could not be resolved.
+    // https://github.com/google/dagger/issues/4097#issuecomment-1763781846
+    // Note, This is a temporary fix and needs to wait for the official official fix
+    androidComponents {
+        onVariants(selector().all()) { variant ->
+            afterEvaluate {
+                project.tasks.getByName("ksp" + variant.name.capitalized() + "Kotlin") {
+                    val dataBindingTask =
+                        project.tasks.getByName("dataBindingGenBaseClasses" + variant.name.capitalized()) as DataBindingGenBaseClassesTask
+                    (this as AbstractKotlinCompileTool<*>).setSource(dataBindingTask.sourceOutFolder)
+                }
+            }
+        }
     }
 }
 
