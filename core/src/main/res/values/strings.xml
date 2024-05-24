@@ -2,4 +2,10 @@
     <string name="app_name">GeoTrack</string>
     <string name="icon" translatable="false">Icon</string>
     <string name="emptyText" translatable="false">-----</string>
+    <string name="allow">Allow</string>
+    <string name="deny">Deny</string>
+    <string name="permissionDialogTitle">Permission required</string>
+    <string name="permissionDialogDescription">We need location permission to use the app</string>
+    <string name="backgroundPermissionDialogDescription">We need background permission to use the app even in the background</string>
+    <string name="startWalking">Start Walking</string>
 </resources>

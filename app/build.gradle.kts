@@ -118,5 +118,8 @@ dependencies {
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
 
+    //LifeCycleViewModel
+    implementation(libs.androidx.lifecycle.viewmodel)
+
 
 }

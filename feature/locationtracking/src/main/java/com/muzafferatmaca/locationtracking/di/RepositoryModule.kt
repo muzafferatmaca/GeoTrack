@@ -2,7 +2,10 @@ package com.muzafferatmaca.locationtracking.di
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.muzafferatmaca.locationtracking.data.repository.LocationRepositoryImpl
 import com.muzafferatmaca.locationtracking.data.repository.UserPreferencesRepositoryImpl
+import com.muzafferatmaca.locationtracking.domain.repository.LocationRepository
 import com.muzafferatmaca.locationtracking.domain.repository.UserPreferencesRepository
 import dagger.Module
 import dagger.Provides
@@ -18,6 +21,12 @@ import javax.inject.Singleton
 object RepositoryModule {
     @Provides
     @Singleton
-    fun provideUserPreferencesRepository(dataStore: DataStore<Preferences>) : UserPreferencesRepository = UserPreferencesRepositoryImpl(dataStore)
+    fun provideUserPreferencesRepository(dataStore: DataStore<Preferences>): UserPreferencesRepository =
+        UserPreferencesRepositoryImpl(dataStore)
+
+    @Provides
+    @Singleton
+    fun provideLocationRepository(fusedLocationProviderClient: FusedLocationProviderClient): LocationRepository =
+        LocationRepositoryImpl(fusedLocationProviderClient)
 
 }

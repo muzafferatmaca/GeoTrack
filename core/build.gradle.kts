@@ -46,4 +46,6 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
     //Datastore
     implementation(libs.androidx.datastore)
+    //lottie
+    implementation(libs.airbnbLottie)
 }

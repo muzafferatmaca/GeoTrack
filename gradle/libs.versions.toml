@@ -18,6 +18,12 @@ googleMaps = "18.2.0"
 location = "18.0.0"
 dataStore = "1.0.0"
 lifeCycleViewModel = "2.5.1"
+lottie = "6.4.0"
+coroutineCore = "1.6.4"
+coroutineAndroid = "1.6.4"
+coroutinePlayServices = "1.7.3"
+googleMapsUtils = "3.8.0"
+googleMapsUtilsKtx = "5.0.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -43,6 +49,8 @@ androidx-core-splash-screen = { group = "androidx.core", name = "core-splashscre
 # Maps
 google-maps = { group = "com.google.android.gms", name = "play-services-maps", version.ref = "googleMaps" }
 google-location = { group = "com.google.android.gms", name = "play-services-location", version.ref = "location" }
+google-maps-utils = { group = "com.google.maps.android", name = "android-maps-utils", version.ref = "googleMapsUtils" }
+google-maps-utilsKtx = { group = "com.google.maps.android", name = "maps-utils-ktx", version.ref = "googleMapsUtilsKtx" }
 
 #DataStore
 androidx-datastore = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "dataStore" }
@@ -50,6 +58,13 @@ androidx-datastore = { group = "androidx.datastore", name = "datastore-preferenc
 #LifeCycle
 androidx-lifecycle-viewmodel = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "lifeCycleViewModel" }
 
+#Lottie
+airbnbLottie = { group = "com.airbnb.android", name = "lottie", version.ref = "lottie" }
+
+#Coroutines
+coroutine-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "coroutineCore" }
+coroutine-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "coroutineAndroid" }
+coroutine-playServices = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-play-services", version.ref = "coroutinePlayServices" }
 
 
 [plugins]

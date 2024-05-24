@@ -6,7 +6,6 @@ import androidx.lifecycle.viewModelScope
 import com.muzafferatmaca.core.baseclass.BaseViewModel
 import com.muzafferatmaca.locationtracking.domain.usecase.theme.GetThemeUseCase
 import com.muzafferatmaca.locationtracking.domain.usecase.theme.SetThemeUseCase
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -16,7 +15,7 @@ import javax.inject.Inject
  * Created by Muzaffer Atmaca on 23.05.2024 at 14:57
  */
 
-class HomeViewModel @Inject constructor(
+class UserPreferencesViewModel @Inject constructor(
     application: Application,
     private val setThemeUseCase: SetThemeUseCase,
     getThemeUseCase: GetThemeUseCase

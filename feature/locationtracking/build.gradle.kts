@@ -76,5 +76,9 @@ dependencies {
     implementation(libs.androidx.datastore)
     //LifeCycleViewModel
     implementation(libs.androidx.lifecycle.viewmodel)
+    //Coroutine
+    implementation(libs.coroutine.core)
+    implementation(libs.coroutine.android)
+    implementation(libs.coroutine.playServices)
 
 }

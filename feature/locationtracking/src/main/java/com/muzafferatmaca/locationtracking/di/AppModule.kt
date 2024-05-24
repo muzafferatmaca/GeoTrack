@@ -3,6 +3,8 @@ package com.muzafferatmaca.locationtracking.di
 import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.muzafferatmaca.core.common.datastore
 import dagger.Module
 import dagger.Provides
@@ -19,9 +21,14 @@ import javax.inject.Singleton
 object AppModule {
     @Provides
     @Singleton
-    fun provideContext(@ApplicationContext context: Context) : Context = context
+    fun provideContext(@ApplicationContext context: Context): Context = context
 
     @Provides
     @Singleton
-    fun provideDataStore(context: Context) : DataStore<Preferences> = context.datastore
+    fun provideDataStore(context: Context): DataStore<Preferences> = context.datastore
+
+    @Provides
+    @Singleton
+    fun provideFusedLocation(context: Context): FusedLocationProviderClient =
+        LocationServices.getFusedLocationProviderClient(context)
 }
