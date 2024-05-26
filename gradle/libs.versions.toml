@@ -24,6 +24,7 @@ coroutineAndroid = "1.6.4"
 coroutinePlayServices = "1.7.3"
 googleMapsUtils = "3.8.0"
 googleMapsUtilsKtx = "5.0.0"
+googleMapsPlaces = "3.4.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -51,6 +52,8 @@ google-maps = { group = "com.google.android.gms", name = "play-services-maps", v
 google-location = { group = "com.google.android.gms", name = "play-services-location", version.ref = "location" }
 google-maps-utils = { group = "com.google.maps.android", name = "android-maps-utils", version.ref = "googleMapsUtils" }
 google-maps-utilsKtx = { group = "com.google.maps.android", name = "maps-utils-ktx", version.ref = "googleMapsUtilsKtx" }
+google-maps-places = { group = "com.google.android.libraries.places", name = "places", version.ref = "googleMapsPlaces" }
+
 
 #DataStore
 androidx-datastore = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "dataStore" }

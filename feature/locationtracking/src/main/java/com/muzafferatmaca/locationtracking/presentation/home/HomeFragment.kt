@@ -6,7 +6,6 @@ import android.content.Intent
 import android.graphics.Color
 import android.location.Address
 import android.location.Geocoder
-import android.location.Location
 import android.os.Build
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
@@ -23,13 +22,14 @@ import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.maps.model.Polyline
 import com.google.android.gms.maps.model.PolylineOptions
+import com.google.maps.android.SphericalUtil
 import com.muzafferatmaca.core.baseclass.BaseFragment
-import com.muzafferatmaca.core.common.disable
-import com.muzafferatmaca.core.common.enable
+import com.muzafferatmaca.core.common.invisible
 import com.muzafferatmaca.core.common.selfPermission
 import com.muzafferatmaca.core.common.setSafeOnClickListener
 import com.muzafferatmaca.core.common.showResultDialog
 import com.muzafferatmaca.core.common.showToast
+import com.muzafferatmaca.core.common.visible
 import com.muzafferatmaca.locationtracking.R
 import com.muzafferatmaca.locationtracking.databinding.FragmentHomeBinding
 import com.muzafferatmaca.locationtracking.service.LocationTrackerService
@@ -37,6 +37,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.io.IOException
+import java.util.Locale
 import javax.inject.Inject
 
 
@@ -51,8 +52,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     private var lastMarkerLocation: LatLng? = null
     private var polylineList = mutableListOf<Polyline>()
     private var markerList = mutableListOf<Marker>()
-    private lateinit var geocoder: Geocoder
-
 
     private val permissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
         if (isGranted) {
@@ -61,39 +60,25 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         }
     }
 
+    private val notificationPermissionResultLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()){}
+
+
     override fun initUi() {
         setTheme()
         observeTheme()
         setUi()
         ifFineLocationPermission()
-        getLocation()
         setTracking()
+        removeTrackerClick()
     }
 
     private fun setUi() {
-        saveButtonGettingReady()
         val supportMapFragment = childFragmentManager.findFragmentByTag("mapFragment") as SupportMapFragment?
         supportMapFragment?.getMapAsync {
             map = it
             setMarkerClickListener()
+            getLocation()
         }
-    }
-
-    private fun saveButtonEnabled(){
-        binding.saveButton.root.enable()
-        binding.saveButton.primaryIconImageView.setImageResource(com.muzafferatmaca.core.R.drawable.ic_location)
-        binding.saveButton.primaryTextTextView.text = resources.getString(com.muzafferatmaca.core.R.string.startWalking)
-    }
-
-    private fun saveButtonDisabled(){
-        binding.saveButton.root.disable()
-        binding.saveButton.primaryTextTextView.text = resources.getString(com.muzafferatmaca.core.R.string.stopWalking)
-    }
-
-    private fun saveButtonGettingReady(){
-        binding.saveButton.root.disable()
-        binding.saveButton.primaryIconImageView.setImageResource(com.muzafferatmaca.core.R.drawable.ic_loading)
-        binding.saveButton.primaryTextTextView.text = resources.getString(com.muzafferatmaca.core.R.string.gettingReady)
     }
 
     /**
@@ -181,8 +166,25 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
                 { permissionLauncher.launch(Manifest.permission.ACCESS_BACKGROUND_LOCATION)},
                 { permissionDialog(resources.getString(com.muzafferatmaca.core.R.string.backgroundPermissionDialogDescription)) },
                 {
-                    //TODO background location
+                    requireContext().showToast(resources.getString(com.muzafferatmaca.core.R.string.alertBackgroundPermissionDescription))
                 }
+            )
+        }
+    }
+
+    /**
+     * Notification permission control and request
+     */
+    private fun ifNotificationPermission(){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU){
+            requireActivity().selfPermission(
+                Manifest.permission.POST_NOTIFICATIONS,
+                binding.root,
+                resources.getString(com.muzafferatmaca.core.R.string.permissionDialogDescription),
+                resources.getString(com.muzafferatmaca.core.R.string.allow),
+                { notificationPermissionResultLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)},
+                {  notificationPermissionResultLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)},
+                {}
             )
         }
     }
@@ -195,6 +197,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
             locationViewModel.location.collect {latLang ->
                 latLang?.let {
                     setLocation(it)
+                    setNear(latLang)
                 }
             }
         }
@@ -221,19 +224,24 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
             delay(3000)
             map.animateCamera(CameraUpdateFactory.zoomTo(17f), 2000, null)
             delay(1000)
-            saveButtonEnabled()
         }
-
-        setNear(latLng)
-
+        observeTrackerService()
     }
 
     /**
      * To access their own location again when the user scrolls the map
      */
     private fun setNear(userLocation : LatLng){
-        binding.nearMeImageView.setSafeOnClickListener {
-            map.animateCamera(CameraUpdateFactory.newLatLngZoom(userLocation,17f,), 2000, null)
+        binding.nearMeImageView.setOnClickListener {
+            if (locationList.isNotEmpty()) {
+                val lastLocation = locationList.last()
+                val cameraPosition = lastLocation.setCameraPosition()
+                val cameraUpdate = CameraUpdateFactory.newCameraPosition(cameraPosition)
+                map.animateCamera(cameraUpdate, 1000, null)
+            }else{
+                locationViewModel.fetchLocation()
+                map.animateCamera(CameraUpdateFactory.newLatLngZoom(userLocation,17f,), 2000, null)
+            }
         }
     }
 
@@ -246,31 +254,48 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
     private fun setTracking(){
         binding.saveButton.root.setOnClickListener {
-            if (binding.saveButton.root.isEnabled){
-                saveButtonDisabled()
-                sendActionService(Constants.ACTION_SERVICE_START)
-                locationViewModel.startLocationUpdates()
-                observeTracker()
-            }
+            ifNotificationPermission()
+            ifBackgroundLocationPermission()
+            removeTracker()
+            sendActionService(Constants.ACTION_SERVICE_START)
+            binding.saveButton.root.invisible()
+            binding.stopButton.root.visible()
         }
-
-        binding.deleteRouteImageView.setSafeOnClickListener {
-            sendActionService(Constants.ACTION_SERVICE_STOP)
-            locationViewModel.stopLocationUpdates()
-            saveButtonEnabled()
+        binding.stopButton.root.setOnClickListener {
             showBiggerPicture()
+            sendActionService(Constants.ACTION_SERVICE_STOP)
+            binding.saveButton.root.visible()
+            binding.stopButton.root.invisible()
         }
     }
 
-    private fun observeTracker(){
-        lifecycleScope.launch {
-            locationViewModel.locationUpdates.collect{
-                if (it.longitude != 0.0 && it.longitude != 0.0){
-                    locationList.add(it)
-                    drawPolyline()
-                    followPolyline()
-                    addMarkerIfNecessary(it)
+    private fun removeTrackerClick(){
+        binding.deleteRouteImageView.setSafeOnClickListener {
+           removeTracker()
+        }
+    }
+
+    private fun removeTracker(){
+        for (polyline in polylineList){
+            polyline.remove()
+        }
+        for (marker in markerList){
+            marker.remove()
+        }
+        locationList.clear()
+    }
+
+    private fun observeTrackerService() {
+        LocationTrackerService.locationList.observe(viewLifecycleOwner) {
+            if (it.isNotEmpty()) {
+                locationList = it
+                if (locationList.size > 1) {
+                    binding.stopButton.root.visible()
+                    binding.saveButton.root.invisible()
                 }
+                drawPolyline()
+                followPolyline()
+                addMarkerIfNecessary(it)
             }
         }
     }
@@ -298,25 +323,19 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         }
     }
 
-    private fun addMarkerIfNecessary(location: LatLng) {
-        val lastLocation = lastMarkerLocation
-        if (lastLocation == null) {
-            val marker = map.addMarker(MarkerOptions().position(location))
-            marker?.let { markerList.add(it) }
-            lastMarkerLocation = location
-        } else {
-            val results = FloatArray(1)
-            Location.distanceBetween(
-                lastLocation.latitude, lastLocation.longitude,
-                location.latitude, location.longitude,
-                results
-            )
-            val distance = results[0]
-            if (distance >= 100) {
-                val marker = map.addMarker(MarkerOptions().position(location))
-                marker?.let { markerList.add(it) }
-                lastMarkerLocation = location
+    /**
+     * Add 1 marker every 100 meters
+     */
+    private fun addMarkerIfNecessary(locations: MutableList<LatLng>) {
+        val startIndex = if (lastMarkerLocation != null) locations.indexOf(lastMarkerLocation) + 1 else 0
+        for (i in startIndex until locations.size) {
+            if (lastMarkerLocation != null && i > 0) {
+                val distance = SphericalUtil.computeDistanceBetween(lastMarkerLocation, locations[i])
+                if (distance < 100) continue
             }
+            val marker = map.addMarker(MarkerOptions().position(locations[i]))
+            marker?.let { markerList.add(it) }
+            lastMarkerLocation = locations[i]
         }
     }
 
@@ -324,34 +343,57 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     private fun setMarkerClickListener() {
         map.setOnMarkerClickListener { marker ->
             val position = marker.position
-            showAddress(position)
+            showAddress(marker, position)
             true
         }
     }
 
-    private fun showAddress(position: LatLng) {
+    private fun showAddress(marker: Marker, position: LatLng) {
+
+        val geocoder = Geocoder(requireContext(), Locale.getDefault())
         try {
             val addresses: List<Address> = geocoder.getFromLocation(position.latitude, position.longitude, 1)!!
             if (addresses.isNotEmpty()) {
                 val address = addresses[0].getAddressLine(0)
-                requireContext().showToast(address)
+                marker.title = address
+                marker.showInfoWindow()
             } else {
-                requireContext().showToast("Address not found")
+                marker.title = "Address not found"
+                marker.showInfoWindow()
             }
         } catch (e: IOException) {
-            requireContext().showToast("Geocoder service not available")
+            marker.title = "Geocoder service not available"
+            marker.showInfoWindow()
         }
     }
 
     private fun showBiggerPicture() {
-        val bounds = LatLngBounds.Builder()
-        for (location in locationList) {
-            bounds.include(location)
+        val boundsBuilder = LatLngBounds.Builder()
+        var hasValidPoints = false
+
+        if (locationList.isNotEmpty()) {
+            for (location in locationList) {
+                if (location.longitude != 0.0 && location.latitude != 0.0) {
+                    boundsBuilder.include(location)
+                    hasValidPoints = true
+                }
+            }
         }
-        map.animateCamera(
-            CameraUpdateFactory.newLatLngBounds(
-                bounds.build(), 100
-            ), 2000, null
-        )
+
+        if (hasValidPoints) {
+            map.animateCamera(
+                CameraUpdateFactory.newLatLngBounds(
+                    boundsBuilder.build(), 100
+                ), 2000, null
+            )
+        }
+
+        lifecycleScope.launch {
+            delay(3000)
+            // TODO: Continue to follow the location
+        }
     }
+
+
+
 }

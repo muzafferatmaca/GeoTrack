@@ -16,13 +16,13 @@ fun Activity.selfPermission(
     snackBarString: CharSequence,
     actionString: CharSequence,
     permissionLauncher : ()-> Unit,
-    dialog : () -> Unit,
+    dialogOrPermissionLauncher : () -> Unit,
     action : () ->Unit,){
     if (ContextCompat.checkSelfPermission(this.baseContext,permission) != PackageManager.PERMISSION_GRANTED) {
         if (ActivityCompat.shouldShowRequestPermissionRationale(this, permission)) {
             Snackbar.make(view, snackBarString, Snackbar.LENGTH_INDEFINITE).setAction(actionString) {
                 permissionLauncher()
             }.show()
-        } else { dialog()}
+        } else { dialogOrPermissionLauncher()}
     } else { action() }
 }

@@ -7,6 +7,8 @@
     <string name="permissionDialogTitle">Permission required</string>
     <string name="permissionDialogDescription">We need location permission to use the app</string>
     <string name="backgroundPermissionDialogDescription">We need background permission to use the app even in the background</string>
+    <string name="notificationPermissionDialogDescription">We need notification permission to see notifications.</string>
+    <string name="alertBackgroundPermissionDescription">You will not be able to access the tracker service in the background</string>
     <string name="startWalking">Start Walking</string>
     <string name="stopWalking">Stop Walking</string>
     <string name="gettingReady">Getting Ready</string>

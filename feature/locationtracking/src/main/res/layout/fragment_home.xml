@@ -20,6 +20,20 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_15"
         android:layout_marginEnd="@dimen/margin_15"
+        android:visibility="visible"
+        android:layout_marginBottom="@dimen/margin_15"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <include
+        android:id="@+id/stopButton"
+        layout="@layout/button_primary_filled_icon_before_disable"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_15"
+        android:layout_marginEnd="@dimen/margin_15"
+        android:visibility="gone"
         android:layout_marginBottom="@dimen/margin_15"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

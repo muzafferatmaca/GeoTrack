@@ -2,8 +2,6 @@ package com.muzafferatmaca.locationtracking.presentation.home
 
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
-import com.google.maps.android.SphericalUtil
-import java.text.DecimalFormat
 
 /**
  * Created by Muzaffer Atmaca on 25.05.2024 at 00:39
@@ -26,12 +24,4 @@ fun LatLng.setCameraPosition(): CameraPosition {
         .target(this)
         .zoom(17f)
         .build()
-}
-
-fun calculateTheDistance(locationList: MutableList<LatLng>): String {
-    if(locationList.size > 1){
-        val meters = SphericalUtil.computeDistanceBetween(locationList.first(), locationList.last())
-        return DecimalFormat("#.##").format(meters)
-    }
-    return "0.00"
 }

@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:clickable="true"
-    android:background="@drawable/button_primary_filled_enabled"
+    android:background="@drawable/button_primary_filled_disabled"
     android:paddingStart="@dimen/spacing"
     android:paddingEnd="@dimen/spacingLG">
 
@@ -35,7 +35,7 @@
             android:layout_marginStart="@dimen/spacingXS"
             android:gravity="center"
             android:maxLines="1"
-            android:text="@string/startWalking"
+            android:text="@string/stopWalking"
             android:textAppearance="@style/Base_Normal"
             android:textColor="@drawable/button_selector_primary_filled_item_color"
             app:layout_constraintBottom_toBottomOf="parent"

@@ -8,13 +8,15 @@ import android.content.Intent
 import androidx.core.app.NotificationCompat
 import androidx.lifecycle.LifecycleService
 import androidx.lifecycle.MutableLiveData
-import com.google.android.gms.location.FusedLocationProviderClient
+import androidx.lifecycle.lifecycleScope
 import com.google.android.gms.maps.model.LatLng
 import com.muzafferatmaca.locationtracking.presentation.home.Constants
 import com.muzafferatmaca.locationtracking.presentation.home.Constants.NOTIFICATION_CHANNEL_ID
 import com.muzafferatmaca.locationtracking.presentation.home.Constants.NOTIFICATION_CHANNEL_NAME
 import com.muzafferatmaca.locationtracking.presentation.home.Constants.NOTIFICATION_ID
+import com.muzafferatmaca.locationtracking.presentation.home.LocationViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 /**
@@ -29,28 +31,23 @@ class LocationTrackerService : LifecycleService() {
     @Inject
     lateinit var notificationManager: NotificationManager
 
-    @Inject
-    lateinit var fusedLocationProviderClient: FusedLocationProviderClient
+    @Inject lateinit var locationViewModel: LocationViewModel
 
     companion object {
-        val started = MutableLiveData<Boolean>()
-        val startTime = MutableLiveData<Long>()
-        val stopTime = MutableLiveData<Long>()
 
         val locationList = MutableLiveData<MutableList<LatLng>>()
+
     }
 
     private fun setInitialValues() {
-        started.postValue(false)
-        startTime.postValue(0L)
-        stopTime.postValue(0L)
 
         locationList.postValue(mutableListOf())
+
     }
 
     override fun onCreate() {
-        setInitialValues()
         super.onCreate()
+        setInitialValues()
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -58,13 +55,14 @@ class LocationTrackerService : LifecycleService() {
         intent?.let {
             when (it.action) {
                 Constants.ACTION_SERVICE_START -> {
-                    started.postValue(true)
+                    locationViewModel.startLocationUpdates()
                     startForeGroundService()
                 }
 
                 Constants.ACTION_SERVICE_STOP -> {
-                    started.postValue(false)
+                    locationViewModel.stopLocationUpdates()
                     stopForegroundService()
+                    locationList.value?.clear()
                 }
 
                 else -> {}
@@ -72,8 +70,18 @@ class LocationTrackerService : LifecycleService() {
 
         }
 
+        lifecycleScope.launch {
+            locationViewModel.locationUpdates.collect{
+                locationList.value?.apply {
+                    add(it)
+                    locationList.postValue(this)
+                }
+            }
+        }
+
         return super.onStartCommand(intent, flags, startId)
     }
+
 
     private fun startForeGroundService() {
         createNotificationChannel()
@@ -86,7 +94,6 @@ class LocationTrackerService : LifecycleService() {
         )
         stopForeground(STOP_FOREGROUND_REMOVE)
         stopSelf()
-        stopTime.postValue(System.currentTimeMillis())
     }
 
     private fun createNotificationChannel() {

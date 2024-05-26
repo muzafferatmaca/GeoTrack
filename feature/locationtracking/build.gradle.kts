@@ -78,6 +78,7 @@ dependencies {
     implementation(libs.google.maps)
     implementation(libs.google.location)
     implementation(libs.google.maps.utils)
+    implementation(libs.google.maps.places)
     //Datastore
     implementation(libs.androidx.datastore)
     //LifeCycleViewModel
