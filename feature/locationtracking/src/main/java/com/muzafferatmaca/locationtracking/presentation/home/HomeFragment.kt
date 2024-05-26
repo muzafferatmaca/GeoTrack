@@ -28,9 +28,7 @@ import com.muzafferatmaca.core.common.invisible
 import com.muzafferatmaca.core.common.selfPermission
 import com.muzafferatmaca.core.common.setSafeOnClickListener
 import com.muzafferatmaca.core.common.showResultDialog
-import com.muzafferatmaca.core.common.showToast
 import com.muzafferatmaca.core.common.visible
-import com.muzafferatmaca.locationtracking.R
 import com.muzafferatmaca.locationtracking.databinding.FragmentHomeBinding
 import com.muzafferatmaca.locationtracking.service.LocationTrackerService
 import dagger.hilt.android.AndroidEntryPoint
@@ -129,7 +127,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
             descriptionColor = ContextCompat.getColor(requireContext(), com.muzafferatmaca.core.R.color.colorText),
             yesButtonText = resources.getString(com.muzafferatmaca.core.R.string.allow),
             yesButtonDrawable = ContextCompat.getDrawable(requireContext(), com.muzafferatmaca.core.R.drawable.button_selector_primary_filled)!!,
-            noButtonText = resources.getString(com.muzafferatmaca.core.R.string.deny),
+            noButtonText = resources.getString(com.muzafferatmaca.core.R.string.closeApp),
             noButtonDrawable = ContextCompat.getDrawable(requireContext(), com.muzafferatmaca.core.R.drawable.button_primary_outline_enabled)!!,
             cancelable = false,
             isOnClickVisibility = true,
@@ -166,7 +164,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
                 { permissionLauncher.launch(Manifest.permission.ACCESS_BACKGROUND_LOCATION)},
                 { permissionDialog(resources.getString(com.muzafferatmaca.core.R.string.backgroundPermissionDialogDescription)) },
                 {
-                    requireContext().showToast(resources.getString(com.muzafferatmaca.core.R.string.alertBackgroundPermissionDescription))
+
                 }
             )
         }
@@ -388,10 +386,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
             )
         }
 
-        lifecycleScope.launch {
-            delay(3000)
-            // TODO: Continue to follow the location
-        }
     }
 
 

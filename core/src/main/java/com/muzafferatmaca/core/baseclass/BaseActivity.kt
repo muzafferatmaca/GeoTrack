@@ -2,7 +2,6 @@ package com.muzafferatmaca.core.baseclass
 
 import android.os.Bundle
 import android.view.LayoutInflater
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewbinding.ViewBinding
 import com.muzafferatmaca.core.common.applyWindowInsets
