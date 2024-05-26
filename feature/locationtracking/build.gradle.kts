@@ -21,12 +21,17 @@ android {
     }
 
     buildTypes {
-        release {
+        getByName(BuildTypes.Android.release) {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            matchingFallbacks += listOf("devRelease", "prodRelease")
+        }
+        getByName(BuildTypes.Android.debug) {
+            matchingFallbacks += listOf("devDebug", "prodDebug")
+
         }
     }
     compileOptions {
@@ -36,7 +41,7 @@ android {
     kotlinOptions {
         jvmTarget = BuildAndroidConfig.JVM_TARGET
     }
-    buildFeatures{
+    buildFeatures {
         viewBinding = true
         buildConfig = true
     }
@@ -72,10 +77,13 @@ dependencies {
     //Map
     implementation(libs.google.maps)
     implementation(libs.google.location)
+    implementation(libs.google.maps.utils)
     //Datastore
     implementation(libs.androidx.datastore)
     //LifeCycleViewModel
     implementation(libs.androidx.lifecycle.viewmodel)
+    implementation(libs.androidx.lifecycle.runtime)
+    implementation(libs.androidx.lifecycle.service)
     //Coroutine
     implementation(libs.coroutine.core)
     implementation(libs.coroutine.android)

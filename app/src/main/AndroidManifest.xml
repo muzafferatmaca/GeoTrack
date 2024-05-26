@@ -13,6 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.GeoTrack"
         tools:targetApi="31">
+
         <activity
             android:name=".MainActivity"
             android:exported="true">
@@ -22,9 +23,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/MAP_API_KEY" />
+
+        <service android:name="com.muzafferatmaca.locationtracking.service.LocationTrackerService"
+            android:foregroundServiceType="location"
+            android:exported="false"/>
+
     </application>
 
 </manifest>

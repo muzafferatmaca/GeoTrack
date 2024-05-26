@@ -1,5 +1,6 @@
 package com.muzafferatmaca.locationtracking.domain.usecase.location
 
+import com.google.android.gms.maps.model.LatLng
 import com.muzafferatmaca.locationtracking.domain.repository.LocationRepository
 import javax.inject.Inject
 
@@ -9,7 +10,7 @@ import javax.inject.Inject
 class GetLocationUseCase @Inject constructor(
     private val locationRepository: LocationRepository
 ) {
-    suspend operator fun invoke(): Pair<Double, Double> {
+    suspend operator fun invoke(): LatLng {
         return locationRepository.getCurrentLocation()
     }
 }

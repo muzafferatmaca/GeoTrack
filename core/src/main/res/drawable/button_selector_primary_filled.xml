@@ -4,14 +4,6 @@
         android:state_enabled="false"
         android:drawable="@drawable/button_primary_filled_disabled"/>
     <item
-        android:state_pressed="true"
-        android:state_enabled="true"
-        android:drawable="@drawable/button_primary_filled_pressed" />
-    <item
-        android:state_focused="true"
-        android:state_enabled="true"
-        android:drawable="@drawable/button_primary_filled_hovered" />
-    <item
         android:state_enabled="true"
         android:drawable="@drawable/button_primary_filled_enabled" />
 </selector>

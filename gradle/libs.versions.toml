@@ -15,9 +15,9 @@ hilt = "2.51.1"
 ksp = "1.9.0-1.0.12"
 splashScreen = "1.0.1"
 googleMaps = "18.2.0"
-location = "18.0.0"
+location = "21.2.0"
 dataStore = "1.0.0"
-lifeCycleViewModel = "2.5.1"
+lifecycle = "2.8.0"
 lottie = "6.4.0"
 coroutineCore = "1.6.4"
 coroutineAndroid = "1.6.4"
@@ -56,7 +56,9 @@ google-maps-utilsKtx = { group = "com.google.maps.android", name = "maps-utils-k
 androidx-datastore = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "dataStore" }
 
 #LifeCycle
-androidx-lifecycle-viewmodel = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "lifeCycleViewModel" }
+androidx-lifecycle-viewmodel = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "lifecycle" }
+androidx-lifecycle-runtime = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycle" }
+androidx-lifecycle-service = { group = "androidx.lifecycle", name = "lifecycle-service", version.ref = "lifecycle" }
 
 #Lottie
 airbnbLottie = { group = "com.airbnb.android", name = "lottie", version.ref = "lottie" }
