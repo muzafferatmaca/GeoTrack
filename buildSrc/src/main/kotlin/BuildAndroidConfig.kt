@@ -4,7 +4,7 @@
 object BuildAndroidConfig {
     const val COMPILE_SDK = 34
     const val TARGET_SDK = 34
-    const val MIN_SDK = 27
+    const val MIN_SDK = 28
 
     const val APPLICATION_ID = "com.muzafferatmaca.geotrack"
     const val APP_NAME = "Geotrack"

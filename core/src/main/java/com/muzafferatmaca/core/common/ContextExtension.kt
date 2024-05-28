@@ -2,9 +2,12 @@ package com.muzafferatmaca.core.common
 
 import android.app.Dialog
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
+import android.net.Uri
+import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.WindowManager
 import android.widget.Toast
@@ -21,6 +24,13 @@ val Context.datastore : DataStore<Preferences> by preferencesDataStore("USER_PRE
 
 fun Context.showToast(message: String,duration: Int = Toast.LENGTH_SHORT){
     Toast.makeText(this,message,duration).show()
+}
+
+fun Context.redirectToSettings() {
+    val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
+        data = Uri.fromParts("package", packageName, null)
+    }
+    startActivity(intent)
 }
 
 fun Context.showResultDialog(

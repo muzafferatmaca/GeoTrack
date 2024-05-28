@@ -3,6 +3,7 @@ package com.muzafferatmaca.locationtracking.presentation.home
 import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Color
 import android.location.Address
 import android.location.Geocoder
@@ -51,21 +52,25 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     private var polylineList = mutableListOf<Polyline>()
     private var markerList = mutableListOf<Marker>()
 
-    private val permissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
-        if (isGranted) {
+    private val requestPermissionsLauncher = registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()
+    ) { permissions ->
+        val granted = permissions.entries.all { it.value }
+        if (granted) {
             locationViewModel.fetchLocation()
-
         }
     }
 
-    private val notificationPermissionResultLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()){}
+    private val permissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()){granted ->
+        if (granted){
 
+        }
+    }
 
     override fun initUi() {
         setTheme()
         observeTheme()
         setUi()
-        ifFineLocationPermission()
+        checkAndRequestPermissions()
         setTracking()
         removeTrackerClick()
     }
@@ -117,7 +122,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
      * When the user launches the application, instead of asking for permission directly,
      * a dialog screen according to why we want the permission
      */
-    private fun permissionDialog(descriptionString: String) {
+    private fun permissionDialog(descriptionString: String, onClickYes: () -> Unit) {
         requireContext().showResultDialog(
             lottieFile = com.muzafferatmaca.core.R.raw.alert,
             isLottie = true,
@@ -131,60 +136,57 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
             noButtonDrawable = ContextCompat.getDrawable(requireContext(), com.muzafferatmaca.core.R.drawable.button_primary_outline_enabled)!!,
             cancelable = false,
             isOnClickVisibility = true,
-            onClickYes = { permissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION) },
+            onClickYes = { onClickYes() },
             onClickNo = { requireActivity().finish() }
         )
     }
 
-    /**
-     * Location permission control and request
-     */
-    private fun ifFineLocationPermission() {
-        requireActivity().selfPermission(
+    private fun checkAndRequestPermissions() {
+        val permissionsToRequest = mutableListOf(
             Manifest.permission.ACCESS_FINE_LOCATION,
-            binding.root,
-            resources.getString(com.muzafferatmaca.core.R.string.permissionDialogDescription),
-            resources.getString(com.muzafferatmaca.core.R.string.allow),
-            { permissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)},
-            { permissionDialog(resources.getString(com.muzafferatmaca.core.R.string.permissionDialogDescription)) },
-            { locationViewModel.fetchLocation()}
+            Manifest.permission.ACCESS_COARSE_LOCATION,
+            Manifest.permission.FOREGROUND_SERVICE
         )
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            permissionsToRequest.add(Manifest.permission.POST_NOTIFICATIONS)
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+            permissionsToRequest.add(Manifest.permission.FOREGROUND_SERVICE_LOCATION)
+        }
+        val permissionsNotGranted = permissionsToRequest.filter {
+            ContextCompat.checkSelfPermission(requireContext(), it) != PackageManager.PERMISSION_GRANTED
+        }
+
+        if (permissionsNotGranted.isNotEmpty()) {
+            permissionDialog(resources.getString(com.muzafferatmaca.core.R.string.permissionDialogDescription)) {
+                requestPermissionsLauncher.launch(permissionsNotGranted.toTypedArray())
+            }
+        } else {
+            // If all permissions are already granted, get location information directly
+            locationViewModel.fetchLocation()
+        }
     }
 
     /**
      * Background location permission control and request
      */
-    private fun ifBackgroundLocationPermission(){
+    private fun ifBackgroundLocationPermission(action: () -> Unit){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q){
             requireActivity().selfPermission(
                 Manifest.permission.ACCESS_BACKGROUND_LOCATION,
                 binding.root,
                 resources.getString(com.muzafferatmaca.core.R.string.permissionDialogDescription),
                 resources.getString(com.muzafferatmaca.core.R.string.allow),
-                { permissionLauncher.launch(Manifest.permission.ACCESS_BACKGROUND_LOCATION)},
-                { permissionDialog(resources.getString(com.muzafferatmaca.core.R.string.backgroundPermissionDialogDescription)) },
+                { permissionLauncher.launch(Manifest.permission.ACCESS_BACKGROUND_LOCATION)
+                },
+                { permissionLauncher.launch(Manifest.permission.ACCESS_BACKGROUND_LOCATION) },
                 {
-
+                    action()
                 }
             )
         }
-    }
 
-    /**
-     * Notification permission control and request
-     */
-    private fun ifNotificationPermission(){
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU){
-            requireActivity().selfPermission(
-                Manifest.permission.POST_NOTIFICATIONS,
-                binding.root,
-                resources.getString(com.muzafferatmaca.core.R.string.permissionDialogDescription),
-                resources.getString(com.muzafferatmaca.core.R.string.allow),
-                { notificationPermissionResultLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)},
-                {  notificationPermissionResultLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)},
-                {}
-            )
-        }
     }
 
     /**
@@ -252,12 +254,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
     private fun setTracking(){
         binding.saveButton.root.setOnClickListener {
-            ifNotificationPermission()
-            ifBackgroundLocationPermission()
-            removeTracker()
-            sendActionService(Constants.ACTION_SERVICE_START)
-            binding.saveButton.root.invisible()
-            binding.stopButton.root.visible()
+            ifBackgroundLocationPermission{
+                removeTracker()
+                sendActionService(Constants.ACTION_SERVICE_START)
+                binding.saveButton.root.invisible()
+                binding.stopButton.root.visible()
+            }
         }
         binding.stopButton.root.setOnClickListener {
             showBiggerPicture()
